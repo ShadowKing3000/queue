@@ -15,7 +15,8 @@ xgboost
 torch
 torch_geometric
 networkx
-
+matplotlib
+numpy
 # Optional (for production)
 gunicorn
 python-dotenv
