@@ -3,6 +3,7 @@ import joblib
 import numpy as np
 import pandas as pd
 from pydantic import BaseModel
+import uvicorn
 
 app = FastAPI()
 
@@ -47,5 +48,4 @@ def predict_wait_time(input_data: WaitTimeInput):
         raise HTTPException(status_code=400, detail=str(e))
 
 if __name__ == "__main__":
-    import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
