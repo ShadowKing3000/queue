@@ -18,7 +18,6 @@ def read_root():
     return {"message": "Welcome to the Time Slot Recommendation API!"}
 
 
-# Load model at startup
 try:
     model = joblib.load("time_slot_model.pkl")
     feature_names = model.feature_names_in_
@@ -31,26 +30,20 @@ def recommend_time_slots(request: DayRequest):
     print("Received request for day:", request.day_name)
 
     try:
-        # Default business hours 9AM-5PM (9-17)
         default_hours = list(range(9, 18))
 
-        # Prepare feature data
         day_data = pd.DataFrame({'hour_of_day': default_hours})
         current_month = datetime.now().month
         day_data['month'] = current_month
         day_data['is_weekend'] = 1 if request.day_name in ['Saturday', 'Sunday'] else 0
 
-        # Add day of week dummies
         for day_col in [col for col in feature_names if col.startswith('day_of_week_')]:
             day_data[day_col] = 1 if day_col == f'day_of_week_{request.day_name}' else 0
 
-        # Predict wait times
         day_data['predicted_wait'] = model.predict(day_data[feature_names])
 
-        # Get top recommendations
         recommendations = day_data.sort_values('predicted_wait').head(3)
 
-        # Format results
         results = []
         for _, row in recommendations.iterrows():
             results.append({

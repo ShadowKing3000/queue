@@ -18,7 +18,6 @@ class WaitTimeInput(BaseModel):
 def read_root():
     return {"message": "Welcome to the Wait Time Prediction API!"}
 
-# Load model at startup (same as your crop model loading)
 model_bundle = joblib.load("wait_time_predictor.pkl")
 models = model_bundle['models']
 preprocessor = model_bundle['preprocessor']
@@ -28,11 +27,9 @@ def predict_wait_time(input_data: WaitTimeInput):
     print("Received input data:", input_data.dict())
 
     try:
-        # Convert input to DataFrame and preprocess
         input_df = pd.DataFrame([input_data.dict()])
         processed = preprocessor.transform(input_df)
 
-        # Get predictions (same pattern as your crop prediction)
         prediction = {
             "predicted_wait_time_minutes": round(models['q0.5'].predict(processed)[0], 1),
             "confidence_interval": {

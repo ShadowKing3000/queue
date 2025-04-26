@@ -5,11 +5,6 @@ import numpy as np
 
 app = FastAPI()
 
-
-# Sample model (replace with your actual trained model)
-# This is just a placeholder - in reality you'd load your trained model
-
-
 model = joblib.load('bottleneck_model.pkl')
 
 

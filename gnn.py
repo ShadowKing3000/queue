@@ -7,7 +7,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
-
 from torch_geometric.data import Data
 from torch_geometric.nn import GCNConv
 import torch.nn.functional as F
@@ -15,7 +14,6 @@ import torch.nn.functional as F
 
 app = FastAPI()
 
-# GNN model class
 class GNNRoutingModel(torch.nn.Module):
     def __init__(self, node_feat_dim, edge_feat_dim, hidden_dim):
         super(GNNRoutingModel, self).__init__()
@@ -31,7 +29,6 @@ class GNNRoutingModel(torch.nn.Module):
         edge_scores = self.edge_predictor(edge_inputs)
         return edge_scores
 
-# Load GNN model
 try:
     node_feat_dim = 5
     edge_feat_dim = 3
@@ -43,7 +40,6 @@ try:
 except Exception as e:
     raise RuntimeError(f"Failed to load model: {str(e)}")
 
-# Request schema
 class GraphRequest(BaseModel):
     counter_id_list: list
     queue_length_list: list
