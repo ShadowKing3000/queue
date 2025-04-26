@@ -12,6 +12,10 @@ joblib
 pandas
 numpy
 xgboost
+torch
+torch_geometric
+networkx
+
 # Optional (for production)
 gunicorn
 python-dotenv
