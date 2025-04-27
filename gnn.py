@@ -5,7 +5,7 @@ import torch
 import networkx as nx
 import numpy as np
 import matplotlib.pyplot as plt
-import pandas as pd
+# import pandas as pd
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from torch_geometric.data import Data
 from torch_geometric.nn import GCNConv
@@ -13,6 +13,9 @@ import torch.nn.functional as F
 
 
 app = FastAPI()
+def load_pandas():
+    import pandas as pd  # Import here to avoid circular issues
+    return pd
 
 class GNNRoutingModel(torch.nn.Module):
     def __init__(self, node_feat_dim, edge_feat_dim, hidden_dim):
@@ -53,6 +56,7 @@ class GraphRequest(BaseModel):
     is_connected_list: list
     start_counter: str
 
+pd = load_pandas()
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the GNN Routing API"}
